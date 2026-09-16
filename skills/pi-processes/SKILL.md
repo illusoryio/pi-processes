@@ -51,7 +51,7 @@ Good:
 }
 ```
 
-`onSuccess: "context"` here because a dev server exiting cleanly needs no immediate reaction; the result becomes context on the next user prompt. Keep the default `turn` for builds, tests, and other one-shot commands whose result you need immediately.
+`onSuccess: "context"` here because a dev server exiting cleanly needs no interruption; the result is delivered at your next turn boundary, or wakes you if you are idle. Keep the default `turn` for builds, tests, and other one-shot commands whose result you need immediately.
 
 Optional `cwd` sets the working directory for the spawned command. Omit it to inherit the agent's current working directory.
 
@@ -232,8 +232,8 @@ Log match watches (`notify.logMatches`, up to 20, each pattern up to 500 chars):
 Attention levels:
 
 - `turn` — wakes an idle agent or steers an active run at the next safe boundary.
-- `context` — queued for the next user prompt; it does not wake or steer the agent.
-- `ignore` — suppresses successful-exit and external-kill notifications. Log matches are retained for the next user prompt. Failure and crash notifications are also retained because failures always notify.
+- `context` — delivered as a follow-up: a working agent sees it at its next turn boundary, an idle agent is woken. It never interrupts mid-turn and never waits for the user.
+- `ignore` — suppresses successful-exit and external-kill notifications. Log matches are retained for the next user prompt (the only level that waits for the user). Failure and crash notifications are also retained because failures always notify.
 
 Use `context` when nothing needs to happen immediately.
 
@@ -367,7 +367,7 @@ Then pick a `watches.mode`:
 }
 ```
 
-- **Retain without interrupting** — set the watch's `on` to `ignore` so matches become context on the next user prompt.
+- **Retain without interrupting** — set the watch's `on` to `ignore` so matches wait for the next user prompt.
 
 ```json
 {

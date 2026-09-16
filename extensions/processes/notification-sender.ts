@@ -15,8 +15,10 @@ export interface ProcessNotificationSendOptions {
 /**
  * Maps a notification attention level to Pi send-message options.
  *
- * `turn` wakes or steers the agent. Other emitted notifications wait for the
- * next user prompt so they cannot split a tool call from its result.
+ * `turn` steers a working agent or wakes an idle one. `context` is delivered
+ * as a follow-up: a working agent sees it at its next turn boundary, an idle
+ * agent is woken. Nothing waits for the user to type. `ignore` stays queued
+ * until the next user prompt.
  */
 export function attentionToSendOptions(
   attention: Attention,
@@ -25,7 +27,7 @@ export function attentionToSendOptions(
     case "turn":
       return { triggerTurn: true, deliverAs: "steer" };
     case "context":
-      return { triggerTurn: false, deliverAs: "nextTurn" };
+      return { triggerTurn: true, deliverAs: "followUp" };
     case "ignore":
       return { triggerTurn: false, deliverAs: "nextTurn" };
   }
