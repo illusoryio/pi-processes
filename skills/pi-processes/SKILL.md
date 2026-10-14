@@ -233,7 +233,7 @@ Attention levels:
 
 - `turn` — wakes an idle agent or steers an active run at the next safe boundary.
 - `context` — delivered as a follow-up: a working agent sees it at its next turn boundary, an idle agent is woken. It never interrupts mid-turn and never waits for the user.
-- `ignore` — suppresses successful-exit and external-kill notifications. Log matches are retained for the next user prompt (the only level that waits for the user). Failure and crash notifications are also retained because failures always notify.
+- `ignore` — suppresses successful-exit and external-kill notifications. Log matches are retained for the next turn, user or pi-started (since pi 1.2.0 a pi-started turn also delivers them; it is the only level that does not start a turn itself). Failure and crash notifications are also retained because failures always notify.
 
 Use `context` when nothing needs to happen immediately.
 
@@ -367,7 +367,7 @@ Then pick a `watches.mode`:
 }
 ```
 
-- **Retain without interrupting** — set the watch's `on` to `ignore` so matches wait for the next user prompt.
+- **Retain without interrupting** — set the watch's `on` to `ignore` so matches wait for the next turn instead of starting one.
 
 ```json
 {
