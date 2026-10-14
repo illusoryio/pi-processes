@@ -12,7 +12,7 @@ describe("process config schema", () => {
   it("uses the package version", () => {
     expect(PROCESS_CONFIG_SCHEMA_VERSION).toBe(pkg.version);
     expect(PROCESS_CONFIG_SCHEMA_URL).toContain(
-      `@aliou/pi-processes@${pkg.version}/schema.json`,
+      `@illusoryai/pi-processes@${pkg.version}/schema.json`,
     );
   });
 

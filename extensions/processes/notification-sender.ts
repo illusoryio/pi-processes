@@ -18,7 +18,7 @@ export interface ProcessNotificationSendOptions {
  * `turn` steers a working agent or wakes an idle one. `context` is delivered
  * as a follow-up: a working agent sees it at its next turn boundary, an idle
  * agent is woken. Nothing waits for the user to type. `ignore` stays queued
- * until the next user prompt.
+ * until the next turn started by Pi, whether user- or Pi-initiated.
  */
 export function attentionToSendOptions(
   attention: Attention,
